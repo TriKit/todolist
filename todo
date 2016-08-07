@@ -1,0 +1,8 @@
+#!/usr/bin/ruby
+require_relative "todo_functions"
+
+# instruction
+read_todo
+dispatch
+print_todo
+write_todo
