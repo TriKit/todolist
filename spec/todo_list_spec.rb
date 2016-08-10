@@ -5,16 +5,23 @@ RSpec.describe TodoList do
   before(:each) do
     @tasks = File.readlines("./spec/test_tasks.txt")
     @todo_list = TodoList.new
-    @task = Task.new("- create tasks.txt undefined")
+    @task = Task.new("- change tasks undefined")
   end
 
   it "reads txt file and creates tasks" do
-    @todo_list.read_todo
-    expect(@todo_list.length).to eq(3)
+    @todo_list.read_todo("./spec/test_tasks.txt")
+    expect(@todo_list.tasks[0].description).to eq("create tasks.txt")
+    expect(@todo_list.tasks[1].description).to eq("create rspec tests")
+    expect(@todo_list.tasks[2].description).to eq("create read_todo method")
   end
 
   it "writes txt file with tasks" do
-
+    @todo_list.read_todo("./spec/test_tasks.txt")
+    @todo_list.add_task(@task)
+    @todo_list.write_todo("./spec/test_tasks2.txt")
+    x = File.readlines("./spec/test_tasks2.txt")
+    expect(x).to include("- change tasks undefined\n")
+    File.delete("./spec/test_tasks2.txt")
   end
 
   it "marks tasks as completed" do
@@ -28,7 +35,7 @@ RSpec.describe TodoList do
   end
 
   it "removes tasks" do
-    task2 = Task.new("- create tasks.txt undefined")
+    task2 = Task.new("- change tasks undefined")
     @todo_list.add_task(@task)
     @todo_list.add_task(task2)
     @todo_list.remove_task(0)

@@ -1,8 +1,29 @@
 #!/usr/bin/ruby
-require_relative "todo_functions"
 
-# instruction
-read_todo
+require_relative 'task'
+require_relative 'todo_list'
+
+@todo_list = TodoList.new
+@todo_list.read_todo(ARGV[0])
+
+def dispatch #Global
+  case ARGV[1]
+  when "add"
+    t = Task.new
+    t.description = ARGV[2]
+    @todo_list.add_task(t)
+  when "remove"
+
+  when "change_status"
+
+  when "assign"
+
+  when "reassign"
+
+  when "instruction"
+    instruction
+  end
+end
+
 dispatch
-print_todo
-write_todo
+@todo_list.print
