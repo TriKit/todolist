@@ -33,12 +33,22 @@ RSpec.describe Command do
   end
 
   it "moves task up" do
-    c2 = Command.new(@todo_list, "add, create_some test, Roman")
+    c2 = Command.new(@todo_list, "add, create_some test, Marsel")
     c3 = Command.new(@todo_list, "up, 2")
     c2.execute
     c3.execute
-    expect(@todo_list.tasks[0].description).to eq('create_some test')
-    expect(@todo_list.tasks[1].description).to eq('create_some')
+    expect(@todo_list.tasks[0].assignee).to eq('Marsel')
+    expect(@todo_list.tasks[1].assignee).to eq('Roman')
+  end
+
+
+  it "moves task down" do
+    c2 = Command.new(@todo_list, "add, create_some test, Marsel")
+    c3 = Command.new(@todo_list, "down, 1")
+    c2.execute
+    c3.execute
+    expect(@todo_list.tasks[1].assignee).to eq('Roman')
+    expect(@todo_list.tasks[0].assignee).to eq('Marsel')
   end
 
 end
