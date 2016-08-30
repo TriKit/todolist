@@ -1,3 +1,4 @@
-+ create tasks.txt undefined
-- create rspec tests Marsel
-* create read_todo method Marsel
+- some method Roman
+- create some Roman
+- create some undefined
+zzz fix dispatch 1

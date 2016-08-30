@@ -2,28 +2,18 @@
 
 require_relative 'task'
 require_relative 'todo_list'
+require_relative 'command'
+require 'rainbow/ext/string'
 
-@todo_list = TodoList.new
-@todo_list.read_todo(ARGV[0])
-
-def dispatch #Global
-  case ARGV[1]
-  when "add"
-    t = Task.new
-    t.description = ARGV[2]
-    @todo_list.add_task(t)
-  when "remove"
-
-  when "change_status"
-
-  when "assign"
-
-  when "reassign"
-
-  when "instruction"
-    instruction
-  end
-end
-
-dispatch
+@todo_list = TodoList.new(ARGV[0])
+@todo_list.read_todo
+@todo_list.instruction
 @todo_list.print
+
+while line = $stdin.gets
+  Command.new(@todo_list, line).execute
+  puts "*******"
+  @todo_list.print
+  puts "*******"
+  @todo_list.write_todo
+end

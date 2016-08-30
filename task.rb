@@ -1,3 +1,5 @@
+require 'rainbow/ext/string'
+
 class Task
   attr_accessor :status, :assignee, :description
 
@@ -14,16 +16,18 @@ class Task
   def parse_status(s=self.status, colorize: false)
     colors = { completed: :green, new: :red, in_progress: :orange, pause: :white }
     statuses = { completed: "+", new: "-", in_progress: "*", pause: "zzz" }
-    result = if s.kind_of?(String)
-      statuses.invert[s]
-    else
-      statuses[s]
-    end
+    result = s.kind_of?(String) ? statuses.invert[s] : statuses[s]
     colorize ? result.color(colors[s]) : result
   end
 
-  def change_assignee(description, person)
-    self.assignee = person if self.description == description
+  def change_status(status)
+    status = status.rstrip.to_sym
+    return false unless [:completed, :new, :in_progress, :pause].include?(status)
+    @status = status
+  end
+
+  def assign(person)
+    @assignee = person
   end
 
   def line_for_file
@@ -33,7 +37,7 @@ class Task
 
   def line_for_display(number)
     a = assignee == nil ? "undefined" : assignee
-    "#{parse_status} #{number}. task: #{description} assignee: #{a}"
+    "#{parse_status(colorize: true)} #{number}. task: #{description} assignee: #{a.capitalize}"
   end
 
 end
