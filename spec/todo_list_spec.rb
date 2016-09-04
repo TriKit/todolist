@@ -30,10 +30,10 @@ RSpec.describe TodoList do
   end
 
   it "removes tasks" do
-    task2 = Task.new("- change tasks undefined")
+    task2 = Task.new("- some new ****** undefined")
     @todo_list.add_task(@task)
     @todo_list.add_task(task2)
-    @todo_list.remove_task(1)
+    @todo_list.remove_task(0)
     expect(@todo_list.tasks).to include(task2)
     expect(@todo_list.tasks).not_to include(@task)
   end

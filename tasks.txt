@@ -1,4 +1,4 @@
-- some method Roman
-- create some Roman
-- create some undefined
-zzz fix dispatch 1
+- add list of commands Marsel
+- fix remove undo marsel
+- fix remove marsel
+- some 

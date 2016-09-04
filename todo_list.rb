@@ -3,6 +3,7 @@ require 'rainbow/ext/string'
 class TodoList
 
   attr_reader :tasks, :file_name
+  attr_writer :tasks
 
   def initialize(file_name)
     @file_name = file_name
@@ -13,13 +14,12 @@ class TodoList
     puts "All command arguments should separate by comma".color(:red)
     puts "Commands: ".color(:yellow)
     puts "add, task, person".color(:blue) + " - adds task to todo list with assignee person".color(:yellow)
-
     puts "remove, task number".color(:blue) + " - removes task from todo list".color(:yellow)
     puts "status, task number, status".color(:blue) + " - change tasks status".color(:yellow)
     puts "assign, task number, person".color(:blue) + " - add responsible person if he was not previously appointed or reassign for one task".color(:yellow)
-    puts "up, task number".color(:blue) + "moves task up".color(:yellow)
-    puts "down, task number".color(:blue) + "moves task down".color(:yellow)
-    puts "save".color(:blue) + "saves changes in file".color(:yellow)
+    puts "up, task number".color(:blue) + " - moves task up".color(:yellow)
+    puts "down, task number".color(:blue) + " - moves task down".color(:yellow)
+    puts "save".color(:blue) + " - saves changes in file".color(:yellow)
   end
 
   def read_todo
