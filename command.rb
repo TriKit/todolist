@@ -25,6 +25,16 @@ class Command
 
   private
 
+    def new_todo(file_name)
+      @todo_list.create(file_name)
+      @undo = lambda { @todo_list.delete(file_name) }
+    end
+
+    def delete_todo(file_name)
+      @todo_list.delete(file_name)
+      @undo = lambda { @todo_list.new_todo(file_name) }
+    end
+
     def add(description, assignee)
       t = Task.new
       t.description = description

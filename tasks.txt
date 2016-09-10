@@ -1,4 +1,2 @@
 - add list of commands Marsel
-- fix remove undo marsel
-- fix remove marsel
-- some 
+- add list of commands Marsel

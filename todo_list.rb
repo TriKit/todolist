@@ -12,6 +12,8 @@ class TodoList
   def instruction
     puts "----------TO LIST-------------".color(:yellow)
     puts "All command arguments should separate by comma".color(:red)
+    puts "new_todo, file_name".color(:blue) + " - creates todo list file".color(:yellow)
+    puts "delete_todo, file_name".color(:blue) + " - removes todo list file".color(:yellow)
     puts "Commands: ".color(:yellow)
     puts "add, task, person".color(:blue) + " - adds task to todo list with assignee person".color(:yellow)
     puts "remove, task number".color(:blue) + " - removes task from todo list".color(:yellow)
@@ -20,6 +22,14 @@ class TodoList
     puts "up, task number".color(:blue) + " - moves task up".color(:yellow)
     puts "down, task number".color(:blue) + " - moves task down".color(:yellow)
     puts "save".color(:blue) + " - saves changes in file".color(:yellow)
+  end
+
+  def create(file_name)
+    File.new(file_name + ".txt", "w");
+  end
+
+  def delete(file_name)
+    File.delete(file_name + ".txt");
   end
 
   def read_todo
