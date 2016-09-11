@@ -29,7 +29,7 @@ class Command
     def start(index)
       index = index.to_i - 1
       @todo_list.tasks[index].start
-      puts "Start time tracking task number #{index+1} at #{Time.now}".color(:green)
+      puts "Start time tracking task number #{index+1} at #{Time.now.strftime('%H:%M:%S')}".color(:green)
       @undo = lambda do
         @todo_list.tasks[index].stop
         @todo_list.tasks[index].start_time = nil
@@ -42,7 +42,7 @@ class Command
       index = index.to_i - 1
       st = @todo_list.tasks[index].start_time
       @todo_list.tasks[index].stop
-      puts "Stop time tracking task number #{index+1} at #{Time.now} | Total time is #{@todo_list.tasks[index].total_time}".color(:orange)
+      puts "Stop time tracking task number #{index+1} at #{Time.now.strftime('%H:%M:%S')} | Total time is #{@todo_list.tasks[index].total_time}".color(:orange)
       @undo = lambda do
         @todo_list.tasks[index].start_time = st
         @todo_list.tasks[index].total_time = nil
@@ -50,6 +50,7 @@ class Command
       end
     end
 
+    #should open file
     def open(file_name)
       exec("exit | ./todo './todo_folder/#{file_name}'")
     end
