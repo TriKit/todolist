@@ -1,9 +1,12 @@
 require_relative "../command"
 require_relative "../task"
 require_relative "../todo_list"
+require 'spec_helper'
 
 RSpec.describe Command do
+  
   before(:each) do
+    suppress_log_output
     @todo_list = TodoList.new("./spec/test_tasks.txt")
     @add_task = Command.new(@todo_list, "add, create_some, Roman")
     @add_task.execute
