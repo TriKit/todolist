@@ -25,6 +25,7 @@ class Command
 
   private
 
+    #starts task time tracking
     def start(index)
       index = index.to_i - 1
       @todo_list.tasks[index].start
@@ -36,6 +37,7 @@ class Command
       end
     end
 
+    #stops task time tracking
     def stop(index)
       index = index.to_i - 1
       st = @todo_list.tasks[index].start_time
@@ -48,16 +50,19 @@ class Command
       end
     end
 
+    #creates new todo list file
     def new_todo(file_name)
       @todo_list.create(file_name)
       @undo = lambda { @todo_list.delete(file_name) }
     end
 
+    #deletes new todo list file
     def delete_todo(file_name)
       @todo_list.delete(file_name)
       @undo = lambda { @todo_list.new_todo(file_name) }
     end
 
+    #adds new task
     def add(description, assignee)
       t = Task.new
       t.description = description
@@ -68,6 +73,7 @@ class Command
       end
     end
 
+    #removes task
     def remove(index)
       if index =~ /\A\d+\Z/
         index = index.to_i - 1
@@ -81,6 +87,7 @@ class Command
       end
     end
 
+    #assigns person to task
     def assign(index, person)
       index = index.to_i
       assignee = @todo_list.tasks[index-1].assignee
@@ -90,6 +97,7 @@ class Command
       end
     end
 
+    #changes tasks status
     def status(index, status)
       index = index.to_i
       prev_status = @todo_list.tasks[index-1].status
@@ -99,24 +107,29 @@ class Command
       end
     end
 
+    #prints instruction
     def instruction
       @todo_list.instruction
     end
 
+    #change task position to one step up
     def up(index)
       @todo_list.up(index.to_i-1)
       @undo = lambda { down(index.to_i-1) }
     end
 
+    #change task position to one step down
     def down(index)
       @todo_list.down(index.to_i-1)
       @undo = lambda { up(index.to_i+1) }
     end
 
+    #saves todo list
     def save
       @todo_list.write_todo
     end
 
+    #exit
     def exit
       Kernel.exit
     end
