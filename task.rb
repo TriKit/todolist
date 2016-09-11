@@ -21,7 +21,7 @@ class Task
   end
 
   def change_status(status)
-    status = status.rstrip.to_sym
+    status = status.to_s.rstrip.to_sym
     return false unless [:completed, :new, :in_progress, :pause].include?(status)
     @status = status
   end

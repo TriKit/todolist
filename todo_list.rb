@@ -50,6 +50,7 @@ class TodoList
     @tasks << task
   end
 
+  # Проверка что индекс число и вообще передан???
   def remove_task(index)
     if get_by_index(index)
       @tasks.delete_at(index)

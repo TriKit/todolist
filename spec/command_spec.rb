@@ -9,8 +9,8 @@ RSpec.describe Command do
     @add_task.execute
   end
 
-  describe "undo method" do
-    it "cancels command add" do
+  describe "***undo method***" do
+    it "undos add command" do
       @add_task.undo
       expect(@todo_list.tasks.length).to eq(0)
     end
@@ -18,12 +18,10 @@ RSpec.describe Command do
     it "cancels command remove" do
       add_task = Command.new(@todo_list, "add, create_some, Marsel")
       add_task.execute
-      p @todo_list.tasks
       remove_command = Command.new(@todo_list, "remove, 2")
       remove_command.execute
       remove_command.undo
-      p @todo_list.tasks
-      expect(@todo_list.tasks.length).to eq(1)
+      expect(@todo_list.tasks.length).to eq(2)
     end
 
     it "cancels command assign" do

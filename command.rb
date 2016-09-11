@@ -46,14 +46,16 @@ class Command
     end
 
     def remove(index)
-      index = index.to_i
-      task = @todo_list.tasks[index]
-      tasks = @todo_list.tasks
-      @todo_list.remove_task(index - 1)
-      @undo = lambda do
-        tasks.insert(index, task)
+      if index =~ /\A\d+\Z/
+        index = index.to_i - 1
+        task = @todo_list.tasks[index]
+        tasks = @todo_list.tasks
+        @todo_list.remove_task(index)
+        @undo = lambda do
+          tasks.insert(index, task)
+        end
+        @todo_list.tasks = tasks
       end
-      @todo_list.tasks = tasks
     end
 
     def assign(index, person)
