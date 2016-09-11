@@ -51,13 +51,13 @@ class Command
     end
 
     #creates new todo list file
-    def new_todo(file_name)
+    def new(file_name)
       @todo_list.create(file_name)
       @undo = lambda { @todo_list.delete(file_name) }
     end
 
     #deletes new todo list file
-    def delete_todo(file_name)
+    def delete(file_name)
       @todo_list.delete(file_name)
       @undo = lambda { @todo_list.new_todo(file_name) }
     end
