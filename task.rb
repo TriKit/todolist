@@ -36,8 +36,10 @@ class Task
   end
 
   def line_for_display(number)
+    s = start_time == nil ? "?" : start_time
+    t = total_time == nil ? "?" : total_time
     a = assignee == nil ? "undefined" : assignee
-    "#{parse_status(colorize: true)} #{number}. task: #{description} assignee: #{a.capitalize}"
+    "#{parse_status(colorize: true)} #{number}. | task: #{description} | assignee: #{a.capitalize} | start time: #{s} | total time: #{t}"
   end
 
   def start
@@ -51,7 +53,7 @@ class Task
     if @start_time
       @total_time = Time.now.to_i - @start_time
       @start_time = nil
-    end  
+    end
   end
 
 end

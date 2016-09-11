@@ -11,17 +11,19 @@ class TodoList
 
   def instruction
     puts "----------TO LIST-------------".color(:yellow)
-    puts "All command arguments should separate by comma".color(:red)
+    puts "All command arguments should be separated by comma".color(:red)
+    puts "Commands: ".color(:yellow)
     puts "new_todo, file_name".color(:blue) + " - creates todo list file".color(:yellow)
     puts "delete_todo, file_name".color(:blue) + " - removes todo list file".color(:yellow)
-    puts "Commands: ".color(:yellow)
     puts "add, task, person".color(:blue) + " - adds task to todo list with assignee person".color(:yellow)
     puts "remove, task number".color(:blue) + " - removes task from todo list".color(:yellow)
-    puts "status, task number, status".color(:blue) + " - change tasks status".color(:yellow)
-    puts "assign, task number, person".color(:blue) + " - add responsible person if he was not previously appointed or reassign for one task".color(:yellow)
+    puts "status, task number, status".color(:blue) + " - changes tasks status".color(:yellow)
+    puts "assign, task number, person".color(:blue) + " - adds responsible person if he was not previously appointed or reassign for one task".color(:yellow)
+    puts "start, task number".color(:blue) + " - starts time tracking".color(:yellow)
+    puts "stop, task number".color(:blue) + " - starts time tracking".color(:yellow)
+    puts "save".color(:blue) + " - saves changes in file".color(:yellow)
     puts "up, task number".color(:blue) + " - moves task up".color(:yellow)
     puts "down, task number".color(:blue) + " - moves task down".color(:yellow)
-    puts "save".color(:blue) + " - saves changes in file".color(:yellow)
   end
 
   def create(file_name)
