@@ -116,6 +116,24 @@ RSpec.describe Command do
       expect(@todo_list.tasks[0].assignee).to eq('Roman')
       expect(@todo_list.tasks[1].assignee).to eq('Marsel')
     end
+
+    it "undos command start" do
+      start = Command.new(@todo_list, "start, 1")
+      start.execute
+      start.undo
+      expect(@todo_list.tasks[0].total_time).not_to eq(nil)
+      expect(@todo_list.tasks[0].start_time).to eq(nil)
+    end
+
+    it "undos command stop" do
+      start = Command.new(@todo_list, "start, 1")
+      start.execute
+      stop = Command.new(@todo_list, "stop, 1")
+      stop.execute
+      stop.undo
+      expect(@todo_list.tasks[0].total_time).to eq(nil)
+      expect(@todo_list.tasks[0].start_time).not_to eq(nil)
+    end
   end
 
 end
