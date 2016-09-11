@@ -1,7 +1,7 @@
 require 'rainbow/ext/string'
 
 class Task
-  attr_accessor :status, :assignee, :description
+  attr_accessor :status, :assignee, :description, :start_time, :total_time
 
   def initialize(task_line=nil)
     self.status ||= :new
@@ -38,6 +38,20 @@ class Task
   def line_for_display(number)
     a = assignee == nil ? "undefined" : assignee
     "#{parse_status(colorize: true)} #{number}. task: #{description} assignee: #{a.capitalize}"
+  end
+
+  def start
+    # if @start_time == nil
+    #   @start_time = Time.now.to_i
+    # end
+    @start_time ||= Time.now.to_i
+  end
+
+  def stop
+    if @start_time
+      @total_time = Time.now.to_i - @start_time
+      @start_time = nil
+    end    
   end
 
 end

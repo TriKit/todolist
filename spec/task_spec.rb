@@ -38,4 +38,40 @@ RSpec.describe Task do
     task.change_status("completed")
     expect(task.line_for_display(3)).to eq("+".color(:green) + " 3. task: create tasks.txt assignee: Marsel")
   end
+
+  describe "time tracking" do
+    before(:each) do
+      @task = Task.new("- create time tracker Marsel")
+      #Stub
+      allow(Time).to receive(:now).and_return(100,200)
+    end
+
+    it "saves start time after starting the task" do
+      @task.start
+      expect(@task.start_time).to eq(100)
+    end
+
+    it "ignores second start" do
+      2.times { @task.start }
+      expect(@task.start_time).to eq(100)
+    end
+
+    it "updates total time after stopping the task" do
+      @task.start
+      @task.stop
+      expect(@task.total_time).to eq(100)
+    end
+
+    it "sets start time to nil after stopping the task" do
+      @task.start
+      @task.stop
+      expect(@task.start_time).to be_nil
+    end
+
+    it "ignores second stop" do
+      @task.start
+      @task.stop
+      expect(-> { @task.stop }).not_to raise_exception
+    end
+  end
 end
