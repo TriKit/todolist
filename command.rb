@@ -25,6 +25,29 @@ class Command
 
   private
 
+    def start(index)
+      index = index.to_i - 1
+      @todo_list.tasks[index].start
+      puts "Start time tracking task number #{index+1} at #{Time.now}".color(:green)
+      @undo = lambda do
+        @todo_list.tasks[index].stop
+        @todo_list.tasks[index].start_time = nil
+        puts "Time tracking suspended".color(:red)
+      end
+    end
+
+    def stop(index)
+      index = index.to_i - 1
+      st = @todo_list.tasks[index].start_time
+      @todo_list.tasks[index].stop
+      puts "Stop time tracking task number #{index+1} at #{Time.now} | Total time is #{@todo_list.tasks[index].total_time}".color(:orange)
+      @undo = lambda do
+        @todo_list.tasks[index].start_time = st
+        @todo_list.tasks[index].total_time = nil
+        puts "Time tracking restored. Start time equal #{@todo_list.tasks[index].start_time}".color(:green)
+      end
+    end
+
     def new_todo(file_name)
       @todo_list.create(file_name)
       @undo = lambda { @todo_list.delete(file_name) }

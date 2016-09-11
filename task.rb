@@ -51,7 +51,7 @@ class Task
     if @start_time
       @total_time = Time.now.to_i - @start_time
       @start_time = nil
-    end    
+    end  
   end
 
 end
