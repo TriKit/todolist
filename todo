@@ -5,7 +5,7 @@ require_relative 'todo_list'
 require_relative 'command'
 require 'rainbow/ext/string'
 
-@todo_list = TodoList.new(ARGV[0]="./todo_folder/0.txt")
+@todo_list = TodoList.new(ARGV[0]="default.txt")
 @todo_list.read_todo
 @todo_list.instruction
 @todo_list.print if @todo_list.tasks

@@ -2,8 +2,8 @@ require 'rainbow/ext/string'
 
 class TodoList
 
-  attr_reader :tasks, :file_name
-  attr_writer :tasks
+  attr_accessor :tasks
+  attr_reader :file_name
 
   def initialize(file_name)
     @file_name = file_name
@@ -12,6 +12,7 @@ class TodoList
   def instruction
     puts "----------TO LIST-------------".color(:yellow)
     puts "---All todo files---".color(:orange)
+    # puts "....not fixed yet....".color(:red)
     show_todo_lists
     puts "--------------------".color(:orange)
     puts "All command arguments should be separated by comma".color(:orange)
@@ -30,19 +31,22 @@ class TodoList
   end
 
   def show_todo_lists
-    entries = Dir.entries("./todo_folder")
+    entries = Dir.entries('./todo_folder')
     entries.delete(".")
     entries.delete("..")
-    entries.shift
-    entries.each { |f| puts f.color(:green) }
+    entries.each do |f|
+      puts f.color(:green)
+    end
   end
 
   def create(file_name)
-    File.new(file_name + ".txt", "w");
+    file_name = "#{file_name}.txt"
+    File.new("./todo_folder/#{file_name}", "w")
+    p '#{file_name}.txt'
   end
 
   def delete(file_name)
-    File.delete(file_name + ".txt");
+    File.delete("./todo_folder/#{file_name}.txt")
   end
 
   def read_todo
@@ -54,7 +58,9 @@ class TodoList
 
   def write_todo
     File.open(@file_name, 'w') do |f|
-      @tasks.each { |t| f.puts(t.line_for_file) }
+      if @tasks
+        @tasks.each { |t| f.puts(t.line_for_file) }
+      end
     end
   end
 
@@ -70,7 +76,7 @@ class TodoList
   end
 
   def print
-    if @tasks.empty?
+    if @tasks == nil || @tasks.empty?
       instruction
     else
       @tasks.each_with_index { |t, i| puts(t.line_for_display(i+1)) }
