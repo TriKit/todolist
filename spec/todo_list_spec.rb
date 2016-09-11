@@ -8,6 +8,18 @@ RSpec.describe TodoList do
     @task = Task.new("- change tasks undefined")
   end
 
+  it "creates new todo file" do
+
+  end
+
+  it "removes todo file" do
+
+  end
+
+  it "opens todo file" do
+
+  end
+
   it "reads txt file and creates tasks" do
     @todo_list.read_todo
     expect(@todo_list.tasks[0].description).to eq("create tasks.txt")
