@@ -12,11 +12,13 @@ class TodoList
   def instruction
     puts "----------TO LIST-------------".color(:yellow)
     puts "---All todo files---".color(:orange)
-    # puts "....not fixed yet....".color(:red)
     show_todo_lists
     puts "--------------------".color(:orange)
+
+
     puts "All command arguments should be separated by comma".color(:orange)
     puts "Commands: ".color(:yellow)
+    puts "open, file_name".color(:blue) + " - opens todo list file".color(:yellow)
     puts "new, file_name".color(:blue) + " - creates todo list file".color(:yellow)
     puts "delete, file_name".color(:blue) + " - removes todo list file".color(:yellow)
     puts "add, task, person".color(:blue) + " - adds task to todo list with assignee person".color(:yellow)
@@ -28,6 +30,7 @@ class TodoList
     puts "save".color(:blue) + " - saves changes in file".color(:yellow)
     puts "up, task number".color(:blue) + " - moves task up".color(:yellow)
     puts "down, task number".color(:blue) + " - moves task down".color(:yellow)
+    puts "exit or quit".color(:blue) + " - program exit".color(:yellow)
   end
 
   def show_todo_lists
@@ -40,13 +43,11 @@ class TodoList
   end
 
   def create(file_name)
-    file_name = "#{file_name}.txt"
     File.new("./todo_folder/#{file_name}", "w")
-    p '#{file_name}.txt'
   end
 
   def delete(file_name)
-    File.delete("./todo_folder/#{file_name}.txt")
+    File.delete("./todo_folder/#{file_name}")
   end
 
   def read_todo

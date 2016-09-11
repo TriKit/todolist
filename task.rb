@@ -31,6 +31,8 @@ class Task
   end
 
   def line_for_file
+    s = start_time == nil ? "?" : start_time
+    t = total_time == nil ? "?" : total_time
     a = assignee == nil ? "undefined" : assignee
     "#{parse_status} #{description} #{a}"
   end
@@ -39,7 +41,7 @@ class Task
     s = start_time == nil ? "?" : start_time
     t = total_time == nil ? "?" : total_time
     a = assignee == nil ? "undefined" : assignee
-    "#{parse_status(colorize: true)} #{number}. | task: #{description} | assignee: #{a.capitalize} | start time: #{s} | total time: #{t}"
+    "#{parse_status(colorize: true)} #{number}. task: #{description} assignee: #{a.capitalize} start time: #{s} total time: #{t}"
   end
 
   def start

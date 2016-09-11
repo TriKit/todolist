@@ -50,6 +50,10 @@ class Command
       end
     end
 
+    def open(file_name)
+      exec("exit | ./todo './todo_folder/#{file_name}'")
+    end
+
     #creates new todo list file
     def new(file_name)
       @todo_list.create(file_name)
