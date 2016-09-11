@@ -36,7 +36,7 @@ RSpec.describe Task do
   it "prepares a line to show on a display" do
     task = Task.new("- create tasks.txt Marsel")
     task.change_status("completed")
-    expect(task.line_for_display(3)).to eq("+".color(:green) + " 3. task: create tasks.txt assignee: Marsel")
+    expect(task.line_for_display(3)).to eq("+".color(:green) + " 3. | task: create tasks.txt | assignee: Marsel | start time: ? | total time: ?")
   end
 
   describe "time tracking" do
