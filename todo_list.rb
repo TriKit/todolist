@@ -15,12 +15,9 @@ class TodoList
     puts "---All todo files---".color(:orange)
     show_todo_lists
     puts "--------------------".color(:orange)
-
-
     puts "All command arguments should be separated by comma".color(:orange)
     puts "Commands: ".color(:yellow)
-    puts "open, file_name".color(:blue) + " - opens todo list file".color(:yellow)
-    puts "new, file_name".color(:blue) + " - creates todo list file".color(:yellow)
+    puts "open, file_name".color(:blue) + " - opens todo list file if exists or create new file".color(:yellow)
     puts "delete, file_name".color(:blue) + " - removes todo list file".color(:yellow)
     puts "add, task, person".color(:blue) + " - adds task to todo list with assignee person".color(:yellow)
     puts "remove, task number".color(:blue) + " - removes task from todo list".color(:yellow)
