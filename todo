@@ -5,7 +5,7 @@ require_relative 'todo_list'
 require_relative 'command'
 require 'rainbow/ext/string'
 
-@todo_list = TodoList.new(ARGV[0]="default.txt")
+@todo_list = TodoList.new("default.txt")
 @todo_list.read_todo
 @todo_list.instruction
 @todo_list.print if @todo_list.tasks
@@ -17,10 +17,15 @@ while line = $stdin.gets
   if line.rstrip == "undo"
     commands.last.undo
     commands.pop
+  elsif line =~ /\Aopen/
+    @todo_list = TodoList.new(line.split(',').last.rstrip)
+    @todo_list.read_todo
+    @todo_list.print if @todo_list.tasks
   else
     commands.push(Command.new(@todo_list, line))
     commands.last.execute
   end
+
 
   puts "*******"
   @todo_list.print

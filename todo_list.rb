@@ -7,12 +7,12 @@ class TodoList
 
   def initialize(file_name)
     @file_name = file_name
+    create_file
   end
 
   def instruction
     puts "----------TO LIST-------------".color(:yellow)
     puts "---All todo files---".color(:orange)
-    # puts "....not fixed yet....".color(:red)
     show_todo_lists
     puts "--------------------".color(:orange)
     puts "All command arguments should be separated by comma".color(:orange)
@@ -39,25 +39,25 @@ class TodoList
     end
   end
 
-  def create(file_name)
-    file_name = "#{file_name}.txt"
-    File.new("./todo_folder/#{file_name}", "w")
-    p '#{file_name}.txt'
+  def create_file
+    unless File.exists?("./todo_folder/#{@file_name}")
+      File.new("./todo_folder/#{@file_name}", "w")
+    end
   end
 
   def delete(file_name)
-    File.delete("./todo_folder/#{file_name}.txt")
+    File.delete("./todo_folder/#{file_name}")
   end
 
   def read_todo
-    tasks = File.readlines(@file_name)
+    tasks = File.readlines("./todo_folder/#{@file_name}")
     tasks.each do |task_line|
       add_task(Task.new(task_line))
     end
   end
 
   def write_todo
-    File.open(@file_name, 'w') do |f|
+    File.open("./todo_folder/#{@file_name}", 'w') do |f|
       if @tasks
         @tasks.each { |t| f.puts(t.line_for_file) }
       end

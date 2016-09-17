@@ -1,3 +1,0 @@
-+ create tasks.txt undefined
-- create rspec tests Marsel
-* create read_todo method Marsel

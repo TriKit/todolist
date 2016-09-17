@@ -3,8 +3,8 @@ require_relative "../task"
 RSpec.describe Task do
 
   it "parses status, description and assignee" do
-    task = Task.new("+ create tasks.txt Marsel")
-    task2 = Task.new("+ create tasks.txt undefined")
+    task = Task.new("+,create tasks.txt,Marsel")
+    task2 = Task.new("+,create tasks.txt,undefined")
     expect(task.status).to eq(:completed)
     expect(task.description).to eq("create tasks.txt")
     expect(task.assignee).to eq("Marsel")
@@ -18,25 +18,25 @@ RSpec.describe Task do
   end
 
   it "changes status" do
-    task = Task.new("- create tasks.txt undefined")
+    task = Task.new("-,create tasks.txt,undefined")
     expect(task.change_status('completed')).to eq(:completed)
   end
 
   it "changes assignee" do
-    task = Task.new("- create tasks.txt Marsel")
+    task = Task.new("-,create,tasks.txt,Marsel")
     expect(task.assign("Roman")).to eq("Roman")
   end
 
   it "prepares a line to be written in to the todo file" do
-    task = Task.new("- create tasks.txt Marsel")
+    task = Task.new("-,create tasks.txt,Marsel")
     task.change_status("completed")
-    expect(task.line_for_file).to eq("+ create tasks.txt Marsel")
+    expect(task.line_for_file).to eq("+,create tasks.txt,Marsel,0,0")
   end
 
   it "prepares a line to show on a display" do
-    task = Task.new("- create tasks.txt Marsel")
+    task = Task.new("-,create tasks.txt,Marsel")
     task.change_status("completed")
-    expect(task.line_for_display(3)).to eq("+".color(:green) + " 3. task: create tasks.txt assignee: Marsel start time: ? total time: ?")
+    expect(task.line_for_display(3)).to eq("+".color(:green) + " 3. task: create tasks.txt assignee: Marsel 0 0")
   end
 
   describe "time tracking" do

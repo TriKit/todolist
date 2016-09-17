@@ -6,8 +6,9 @@ class Command
 
   def initialize(todo_list, command_string)
     @todo_list = todo_list
+    command_string.rstrip!
     command_arr = command_string.split(',')
-    @name = command_arr.shift.rstrip
+    @name = command_arr.shift
     @args = command_arr
     @args = command_arr.map do |i|
       i[0] = '' if i[0] == " "
@@ -48,12 +49,6 @@ class Command
         @todo_list.tasks[index].total_time = nil
         puts "Time tracking restored. Start time equal #{@todo_list.tasks[index].start_time}".color(:green)
       end
-    end
-
-    #creates new todo list file
-    def new(file_name)
-      @todo_list.create(file_name)
-      @undo = lambda { @todo_list.delete(file_name) }
     end
 
     #deletes new todo list file

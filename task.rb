@@ -4,12 +4,15 @@ class Task
   attr_accessor :status, :assignee, :description, :start_time, :total_time
 
   def initialize(task_line=nil)
+    #"status,description,assignee,start,total"
     self.status ||= :new
     if task_line
-      task_array = task_line.split(' ')
-      self.status = parse_status(task_array.shift)
-      (x = task_array.pop) == "undefined" ? self.assignee = nil : self.assignee = x
-      self.description = task_array.join(' ')
+      task_array = task_line.split(',')
+      self.status = parse_status(task_array[0])
+      self.description = task_array[1]
+      (x = task_array[2]) == "undefined" ? self.assignee = nil : self.assignee = x
+      (s = task_array[3]) == "?" ? self.start_time = nil : self.start_time = s.to_i
+      (t = task_array[4]) == "?" ? self.total_time = nil : self.total_time = t.to_i
     end
   end
 
@@ -31,15 +34,17 @@ class Task
   end
 
   def line_for_file
+    s = start_time == nil ? "?" : start_time
+    t = total_time == nil ? "?" : total_time
     a = assignee == nil ? "undefined" : assignee
-    "#{parse_status} #{description} #{a}"
+    "#{parse_status},#{description},#{a},#{s},#{t}"
   end
 
   def line_for_display(number)
     s = start_time == nil ? "?" : start_time
     t = total_time == nil ? "?" : total_time
     a = assignee == nil ? "undefined" : assignee
-    "#{parse_status(colorize: true)} #{number}. | task: #{description} | assignee: #{a.capitalize} | start time: #{s} | total time: #{t}"
+    "#{parse_status(colorize: true)} #{number}. task: #{description} assignee: #{a.capitalize} #{s} #{t}"
   end
 
   def start
@@ -49,11 +54,13 @@ class Task
     @start_time ||= Time.now.to_i
   end
 
+  #fix tests
   def stop
     if @start_time
-      @total_time = Time.now.to_i - @start_time
+      @total_time = Time.now.to_i - @start_time + (@total_time || 0)
       @start_time = nil
     end
+    change_status(:completed)
   end
 
 end
