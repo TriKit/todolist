@@ -51,10 +51,10 @@ class Task
   end
 
   def start
-    # if @start_time == nil
-    #   @start_time = Time.now.to_i
-    # end
-    @start_time ||= Time.now.to_i
+    if @start_time == nil || @start_time == 0
+      @start_time = Time.now.to_i
+    end
+    # @start_time ||= Time.now.to_i
   end
 
   #fix tests
