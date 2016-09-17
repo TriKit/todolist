@@ -1,6 +1,9 @@
 require 'rainbow/ext/string'
+require './time_format'
 
 class Task
+  include TimeFormat
+
   attr_accessor :status, :assignee, :description, :start_time, :total_time
 
   def initialize(task_line=nil)
@@ -41,8 +44,8 @@ class Task
   end
 
   def line_for_display(number)
-    s = start_time == nil ? "?" : start_time
-    t = total_time == nil ? "?" : total_time
+    s = start_time == nil ? "?" : Time.at(start_time).strftime("%H:%M:%S")
+    t = total_time == nil ? "?" : seconds_to_units(total_time)
     a = assignee == nil ? "undefined" : assignee
     "#{parse_status(colorize: true)} #{number}. task: #{description} assignee: #{a.capitalize} #{s} #{t}"
   end

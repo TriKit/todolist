@@ -1,7 +1,9 @@
 require 'rainbow/ext/string'
+require './time_format'
 
 class Command
-
+  include TimeFormat
+  
   attr_accessor :todo_list, :name
 
   def initialize(todo_list, command_string)
@@ -43,7 +45,7 @@ class Command
       index = index.to_i - 1
       st = @todo_list.tasks[index].start_time
       @todo_list.tasks[index].stop
-      puts "Stop time tracking task number #{index+1} at #{Time.now.strftime('%H:%M:%S')} | Total time is #{@todo_list.tasks[index].total_time}".color(:orange)
+      puts "Stop time tracking task number #{index+1} at #{Time.now.strftime('%H:%M:%S')} | Total time is #{seconds_to_units(@todo_list.tasks[index].total_time)}".color(:orange)
       @undo = lambda do
         @todo_list.tasks[index].start_time = st
         @todo_list.tasks[index].total_time = nil
