@@ -55,6 +55,7 @@ class Task
       @start_time = Time.now.to_i
     end
     # @start_time ||= Time.now.to_i
+    change_status(:new)
   end
 
   #fix tests

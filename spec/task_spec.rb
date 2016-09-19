@@ -40,10 +40,11 @@ RSpec.describe Task do
   end
 
   describe "time tracking" do
-    before(:each) do
-      @task = Task.new("-,create time tracker,Marsel")
-      #Stub
-      allow(Time).to receive(:now).and_return(100,200)
+    before do |i|
+      unless i.metadata[:skip_before]
+        @task = Task.new("-,create time tracker,Marsel")
+        allow(Time).to receive(:now).and_return(100,200)
+      end
     end
 
     it "saves start time after starting the task" do
@@ -73,5 +74,18 @@ RSpec.describe Task do
       @task.stop
       expect(-> { @task.stop }).not_to raise_exception
     end
+
+    it "adds previous total time when task starts again", :skip_before do
+      @task = Task.new("-,create time tracker,Marsel")
+      allow(Time).to receive(:now).and_return(100,200,300,400)
+      @task.start
+      @task.stop
+      t1 = @task.total_time
+      @task.start
+      @task.stop
+      t2 = @task.total_time
+      expect(t2).to eq(200)
+    end
   end
+
 end
